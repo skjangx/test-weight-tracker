@@ -39,12 +39,14 @@ utils/               # Helper functions
 
 ```bash
 # Development
-npm run dev          # Start development server
+npm run dev          # Start development server (runs on port 3003)
 npm run build        # Production build
 npm run start        # Start production server
 npm run lint         # Run ESLint
 npm run typecheck    # Run TypeScript compiler checks
 ```
+
+**Note:** Local development server runs on port 3003 to avoid conflicts.
 
 ## Database Schema (Supabase)
 
@@ -241,3 +243,17 @@ Common gitmoji for this project:
 2. Use `mcp__shadcn__getComponent` for implementation guidance
 3. Follow established component patterns in the codebase
 4. Maintain consistency with existing Shadcn configuration
+
+## Quick Visual Check
+
+IMMEDIATELY after implementing any front-end change:
+
+1. **Identify what changed** - Review the modified components/pages
+2. **Navigate to affected pages** - Use `mcp__playwright__browser_navigate` to visit each changed view
+3. **Verify design compliance** - Compare against our existing design patterns and UX best practices
+4. **Validate feature implementation** - Ensure the change fulfills the user's specific request
+5. **Check acceptance criteria** - Review any provided context files or requirements
+6. **Capture evidence** - Take full page screenshot at desktop viewport (1440px) of each changed view
+7. **Check for errors** - Run `mcp__playwright__browser_console_messages`
+
+This verification ensures changes meet design standards and user requirements.
