@@ -83,6 +83,38 @@ Multiple weight entries per day are allowed and automatically averaged.
 - Conflict resolution: most recent edit wins
 - Updates animate without page reloads
 
+## MCP Server Integration
+
+This project leverages MCP (Model Context Protocol) servers for enhanced development capabilities:
+
+### Supabase MCP Server
+**Project ID:** `nweuajfgesalluorpygq`
+**Database URL:** `https://nweuajfgesalluorpygq.supabase.co`
+
+Available functions:
+- `mcp__supabase__list_projects` - List all Supabase projects
+- `mcp__supabase__get_project` - Get project details and status
+- `mcp__supabase__create_project` - Create new projects (with cost confirmation)
+- `mcp__supabase__list_tables` - View database schema
+- `mcp__supabase__execute_sql` - Run SQL queries for data operations
+- `mcp__supabase__apply_migration` - Apply DDL changes and migrations
+- `mcp__supabase__get_logs` - Debug with service logs (api, postgres, auth, etc.)
+- `mcp__supabase__generate_typescript_types` - Generate type definitions from schema
+
+**Best Practices:**
+- Use `apply_migration` for schema changes (DDL)
+- Use `execute_sql` for data operations (DML) 
+- Always check `get_logs` when debugging issues
+- Generate TypeScript types after schema changes
+
+### Shadcn MCP Server
+Access to Shadcn UI component library and documentation:
+
+- `mcp__shadcn__getComponents` - List all available components
+- `mcp__shadcn__getComponent` - Get specific component documentation and code
+
+**Usage:** Prefer using MCP server over manual `npx shadcn add` commands for better integration.
+
 ## Shadcn UI Configuration
 
 Components configured with:
@@ -90,7 +122,8 @@ Components configured with:
 - CSS variables enabled
 - Path aliases: `@/components`, `@/lib/utils`
 
-Add new components with: `npx shadcn@latest add [component-name]`
+Add components via MCP server: `mcp__shadcn__getComponent [component-name]`
+Or manually: `npx shadcn@latest add [component-name]`
 
 ## User Stories Reference
 
@@ -187,3 +220,24 @@ Common gitmoji for this project:
 - **Error Handling**: Consistent error boundaries and user feedback
 - **Loading States**: Always provide loading skeletons/indicators
 - **Form Validation**: Client-side validation with server-side verification
+
+### MCP Server Best Practices
+
+**Development Workflow:**
+1. Use MCP servers for database operations instead of direct SQL
+2. Check Supabase logs when debugging API issues
+3. Use Shadcn MCP server to discover and implement components
+4. Generate TypeScript types after any schema changes
+5. Leverage MCP server functions for faster development iteration
+
+**Database Operations Priority:**
+1. **Schema changes**: Use `mcp__supabase__apply_migration`
+2. **Data queries**: Use `mcp__supabase__execute_sql`  
+3. **Debugging**: Use `mcp__supabase__get_logs` with service filters
+4. **Type safety**: Use `mcp__supabase__generate_typescript_types`
+
+**Component Development:**
+1. Check `mcp__shadcn__getComponents` for available options
+2. Use `mcp__shadcn__getComponent` for implementation guidance
+3. Follow established component patterns in the codebase
+4. Maintain consistency with existing Shadcn configuration
