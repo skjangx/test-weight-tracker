@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "@tailwindcss/typography";
 
 :root {
   --background: 0 0% 100%;
