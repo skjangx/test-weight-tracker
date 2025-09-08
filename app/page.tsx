@@ -3,9 +3,19 @@
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const { user, loading, logout } = useAuth();
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  // Redirect authenticated users to dashboard
+  useEffect(() => {
+    if (!loading && user) {
+      router.push('/dashboard');
+    }
+  }, [user, loading, router]);
 
   // Show loading state
   if (loading) {
@@ -19,34 +29,9 @@ export default function Home() {
     );
   }
 
-  // Show authenticated user dashboard
+  // Authenticated users will be redirected to dashboard
   if (user) {
-    return (
-      <main className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">
-              Weight Tracker ⚖️
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Welcome back, {user.username}!
-            </p>
-          </div>
-          <Button onClick={logout} variant="outline">
-            Sign Out
-          </Button>
-        </div>
-
-        <div className="grid gap-6">
-          <div className="p-6 bg-card border border-border rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">Dashboard Coming Soon</h2>
-            <p className="text-muted-foreground">
-              Your weight tracking dashboard will be available here once we implement the goal management and data visualization features.
-            </p>
-          </div>
-        </div>
-      </main>
-    );
+    return null; // Will redirect via useEffect
   }
 
   // Show landing page for unauthenticated users
