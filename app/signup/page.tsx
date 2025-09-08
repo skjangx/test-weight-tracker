@@ -61,7 +61,7 @@ export default function SignupPage() {
   // Show loading state while checking auth
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-8 flex items-center justify-center min-h-screen">
+      <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
           <p className="mt-2 text-sm text-muted-foreground">Loading...</p>
@@ -71,93 +71,95 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 flex items-center justify-center min-h-screen">
-      <div className="w-full max-w-md">
+    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+      <div className="w-full max-w-sm">
         <Card>
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Create Account</CardTitle>
+          <CardHeader>
+            <CardTitle>Create your account</CardTitle>
             <CardDescription>
-              Sign up for your Weight Tracker account
+              Enter your details below to create your account
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
-                <Input
-                  id="username"
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                  disabled={isLoading}
-                  placeholder="Choose a username"
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  disabled={isLoading}
-                  placeholder="Create a password"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                  disabled={isLoading}
-                  placeholder="Confirm your password"
-                />
-              </div>
-
-              {(error || errors.length > 0) && (
-                <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
-                  {error && <div className="mb-2">{error}</div>}
-                  {errors.length > 0 && (
-                    <ul className="list-disc list-inside space-y-1">
-                      {errors.map((err, index) => (
-                        <li key={index}>{err}</li>
-                      ))}
-                    </ul>
-                  )}
+            <form onSubmit={handleSubmit}>
+              <div className="flex flex-col gap-6">
+                <div className="grid gap-3">
+                  <Label htmlFor="username">Username</Label>
+                  <Input
+                    id="username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    placeholder="Choose a username"
+                  />
                 </div>
-              )}
+                
+                <div className="grid gap-3">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    placeholder="Create a password"
+                  />
+                </div>
 
-              <div className="text-xs text-muted-foreground space-y-1">
-                <p>Password requirements:</p>
-                <ul className="list-disc list-inside ml-2 space-y-1">
-                  <li>At least 8 characters long</li>
-                  <li>One uppercase and lowercase letter</li>
-                  <li>One number and special character</li>
-                </ul>
-              </div>
+                <div className="grid gap-3">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Input
+                    id="confirmPassword"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    placeholder="Confirm your password"
+                  />
+                </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Creating Account...
-                  </>
-                ) : (
-                  'Create Account'
+                {(error || errors.length > 0) && (
+                  <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+                    {error && <div className="mb-2">{error}</div>}
+                    {errors.length > 0 && (
+                      <ul className="list-disc list-inside space-y-1">
+                        {errors.map((err, index) => (
+                          <li key={index}>{err}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 )}
-              </Button>
-            </form>
 
-            <div className="mt-6 text-center text-sm">
-              <span className="text-muted-foreground">Already have an account? </span>
-              <Link href="/login" className="text-primary hover:underline">
+                <div className="text-xs text-muted-foreground">
+                  <p className="mb-2">Password requirements:</p>
+                  <ul className="space-y-1 ml-2">
+                    <li>• At least 8 characters long</li>
+                    <li>• One uppercase and lowercase letter</li>
+                    <li>• One number and special character</li>
+                  </ul>
+                </div>
+
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Creating Account...
+                    </>
+                  ) : (
+                    'Create Account'
+                  )}
+                </Button>
+              </div>
+            </form>
+            
+            <div className="mt-4 text-center text-sm">
+              Already have an account?{" "}
+              <Link href="/login" className="underline underline-offset-4">
                 Sign in
               </Link>
             </div>
